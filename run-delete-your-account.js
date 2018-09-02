@@ -48,7 +48,9 @@ class Index {
 			console.log(`new connection: ${socket.id}`)
 			socket.on('delete', data => {
 				this.deleteEverything();
-				io.emit('delete');
+				io.emit('delete', {
+					delete: true
+				});
 			});
 		});
 	}
