@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node run-delete-your-account.js",
     "css": "node-sass public/scss/main.scss public/css/style.css --output-style compressed",
     "watch:css": "onchange 'public/scss/*.scss' -- npm run css"
   },
