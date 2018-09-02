@@ -11,10 +11,12 @@ class App {
 		this.deleteBtn = document.getElementById('delete');
 		this.deleteInput = document.getElementById('delete-input');
 		this.onDeleteBtnClick = this.onDeleteBtnClick.bind(this);
+		this.refreshPage = this.refreshPage.bind(this);
 		this.addListeners();
 	}
 	addListeners() {
 		this.deleteBtn.addEventListener('click', this.onDeleteBtnClick);
+		socket.on('delete', this.refreshPage);
 	}
 	onDeleteBtnClick(e) {
 		console.log('we click');
@@ -22,6 +24,9 @@ class App {
 		socket.emit('delete', {
 			password: this.deleteInput.value
 		});
+	}
+	refreshPage() {
+		window.location.reload(false);
 	}
 }
 

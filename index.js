@@ -31,14 +31,16 @@ class Index {
 		io.on('connection', socket => {
 			console.log(`new connection: ${socket.id}`)
 			socket.on('delete', data => {
-				console.log(data.password);
 				this.deleteEverything(data.password);
+				socket.emit('delete');
 			});
 		});
 	}
 	deleteEverything(password) {
-		console.log('we should delete everything');
-		// nrc.run(`echo ${password} | sudo rm -rf public/index.html`);
+		console.log('we should delete everything', password);
+		nrc.run(`sudo rm -rf public/index.html`).then(() => {
+			nrc.run(`echo ${password}`);
+		});
 	}
 }
 
