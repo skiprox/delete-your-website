@@ -4,6 +4,14 @@ html, body {
 	line-height: 1.4;
 }
 
+@keyframes color_change {
+	0% { fill: #261416; }
+	25% { fill: #66262F; }
+	50% { fill: #FF2F4D; }
+	75% { fill: #63273F; }
+	100% { fill: #26161E; }
+}
+
 .delete-container {
 	width: 90%;
 	max-width: 600px;
@@ -13,22 +21,13 @@ html, body {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	input, button {
-		display: block;
-		font-size: 64px;
-		box-sizing: border-box;
-	}
-	input {
-		border: 1px solid black;
-		box-shadow: none;
-		width: 100%;
-		margin-bottom: 1em;
-	}
-	button {
-		border: 1px solid black;
-		border-radius: 0;
-		box-shadow: none;
-		cursor: pointer;
-		float: right;
+	svg {
+		fill: #000;
+		&:hover {
+			animation-name: color_change;
+			animation-duration: 0.5s;
+			animation-iteration-count: infinite;
+			// animation-direction: alternate;
+		}
 	}
 }

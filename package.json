@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "express": "^4.13.3",
-    "node-run-cmd": "^1.0.1",
     "socket.io": "^1.4.5"
   }
 }

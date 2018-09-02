@@ -1,10 +1,26 @@
 'use strict';
 
-const nrc = require('node-run-cmd');
+const fs = require('fs');
 let express = require('express');
 let app = express();
 let http = require('http').createServer(app);
 let io = require('socket.io')(http);
+
+// Taken from stack overflow: https://stackoverflow.com/a/32197381
+const deleteFolderRecursive = function(path) {
+	if (fs.existsSync(path)) {
+		fs.readdirSync(path).forEach(function(file, index){
+			console.log(file);
+			var curPath = path + "/" + file;
+			if (fs.lstatSync(curPath).isDirectory()) { // recurse
+				deleteFolderRecursive(curPath);
+			} else { // delete file
+				fs.unlinkSync(curPath);
+			}
+		});
+		fs.rmdirSync(path);
+	}
+}
 
 class Index {
 	constructor() {
@@ -14,7 +30,7 @@ class Index {
 		this.onIO();
 	}
 	setupPorts() {
-		app.set('port', (process.env.PORT || 5000));
+		app.set('port', (process.env.PORT || 5002));
 		app.use(express.static(__dirname + '/'));
 	}
 	listenToPort() {
@@ -31,16 +47,14 @@ class Index {
 		io.on('connection', socket => {
 			console.log(`new connection: ${socket.id}`)
 			socket.on('delete', data => {
-				this.deleteEverything(data.password);
+				this.deleteEverything();
 				socket.emit('delete');
 			});
 		});
 	}
-	deleteEverything(password) {
-		console.log('we should delete everything', password);
-		nrc.run(`sudo rm -rf public/index.html`).then(() => {
-			nrc.run(`echo ${password}`);
-		});
+	deleteEverything() {
+		let path = 'public';
+		deleteFolderRecursive('public');
 	}
 }
 

@@ -9,7 +9,6 @@ class App {
 		console.log('hello world');
 		socket.open();
 		this.deleteBtn = document.getElementById('delete');
-		this.deleteInput = document.getElementById('delete-input');
 		this.onDeleteBtnClick = this.onDeleteBtnClick.bind(this);
 		this.refreshPage = this.refreshPage.bind(this);
 		this.addListeners();
@@ -19,10 +18,9 @@ class App {
 		socket.on('delete', this.refreshPage);
 	}
 	onDeleteBtnClick(e) {
-		console.log('we click');
 		e.preventDefault();
 		socket.emit('delete', {
-			password: this.deleteInput.value
+			delete: true
 		});
 	}
 	refreshPage() {
